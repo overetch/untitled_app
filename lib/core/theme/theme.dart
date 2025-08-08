@@ -28,8 +28,6 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   factory AppTheme.dark() => AppTheme(ThemeMode.dark);
 
-  static const _fontFamily = 'SpaceGrotesk';
-
   final ThemeMode mode;
 
   Color color(Palette p, [double? opacity]) =>
