@@ -7,8 +7,11 @@ abstract class Resolver {
 }
 
 class DIContainer implements Resolver {
-  DIContainer._();
-  static final DIContainer instance = DIContainer._();
+  factory DIContainer() {
+    return _instance;
+  }
+  DIContainer._internal();
+  static final DIContainer _instance = DIContainer._internal();
 
   final Map<_Key, _Provider> _providers = {};
   final Map<_Key, Object> _singletons = {};
@@ -126,7 +129,7 @@ class DIContainer implements Resolver {
     return removedP || removedS;
   }
 
-  static T of<T>({Object? key}) => instance.get<T>(key: key);
+  static T of<T>({Object? key}) => _instance.get<T>(key: key);
 }
 
 class _Key {

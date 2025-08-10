@@ -58,7 +58,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
 enum Palette {
   staticWhite.static(color: Colors.white),
   staticBlack.static(color: Colors.black),
-  textDefault(light: Colors.black, dark: Colors.white);
+  authBg.static(color: Color(0xFFD6E2EA)),
+  textDefault(light: Colors.black, dark: Colors.grey);
 
   const Palette({required this.light, required this.dark});
 

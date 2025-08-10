@@ -2,6 +2,7 @@ import 'package:untitled/core/common/either.dart';
 import 'package:untitled/core/error/failure.dart';
 import 'package:untitled/core/exception/exceptions.dart';
 import 'package:untitled/feature/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:untitled/feature/auth/domain/entity/user.dart';
 import 'package:untitled/feature/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -10,7 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<Failure, String>> loginWithEmailPassword({
+  Future<Either<Failure, User>> loginWithEmailPassword({
     required String email,
     required String password,
   }) {
@@ -18,7 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithEmailPassword({
+  Future<Either<Failure, User>> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,

@@ -43,6 +43,8 @@ dependencies:
   drift_flutter: ^0.2.5
   path_provider: ^2.1.5
   supabase_flutter: ^2.9.1
+  # animations
+  rive: ^0.13.20
 
 
 dev_dependencies:
@@ -63,11 +65,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/rive/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
