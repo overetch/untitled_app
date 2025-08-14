@@ -13,7 +13,7 @@ class LoginTeddy extends StatefulWidget {
 }
 
 class _LoginTeddyState extends State<LoginTeddy> {
-  late final fileLoader = LocalAssetLoader(path: "assets/rive/teddy_auth.riv");
+  late final fileLoader = LocalAssetLoader(path: 'assets/rive/teddy_auth.riv');
   late final LoginAnimationController animationController;
 
   @override

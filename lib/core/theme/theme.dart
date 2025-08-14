@@ -36,7 +36,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   ThemeData get themeData {
     return ThemeData(
+      useMaterial3: true,
       extensions: [this],
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.android : PredictiveBackPageTransitionsBuilder(),
+      }),
     );
   }
 

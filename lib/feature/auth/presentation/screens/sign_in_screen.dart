@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:untitled/core/common/widgets/unfocus_widget.dart';
 import 'package:untitled/core/theme/theme.dart';
 import 'package:untitled/feature/auth/presentation/widgets/login_animation_controller.dart';
 
 import '../widgets/login_teddy.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   late final LoginAnimationController animationController;
 
   final GlobalKey<FormState> localKey = GlobalKey<FormState>();
@@ -29,21 +31,15 @@ class _SignupScreenState extends State<SignupScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _emailFocusNode.removeListener(focusNodeListener);
-    _pwdFocusNode.removeListener(focusNodeListener);
-    _emailController.removeListener(emailLengthListener);
-    super.dispose();
-  }
-
   void focusNodeListener() {
     animationController.setIsHandsUp(_pwdFocusNode.hasFocus);
-    animationController.setPeeking(!_emailFocusNode.hasFocus);
+    animationController.setIsChecking(
+      _pwdFocusNode.hasFocus || _emailFocusNode.hasFocus,
+    );
   }
 
   void emailLengthListener() {
-    animationController.setNumLook(_emailController.text.length);
+    animationController.setNumLook(_emailController.text.length, true);
   }
 
   @override
@@ -52,12 +48,14 @@ class _SignupScreenState extends State<SignupScreen> {
       key: localKey,
       child: Scaffold(
         backgroundColor: context.color(Palette.authBg),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Positioned(left: 0, right: 0, child: teddy()),
-              body(),
-            ],
+        body: UnfocusWidget(
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Positioned(left: 0, right: 0, child: teddy()),
+                body(),
+              ],
+            ),
           ),
         ),
       ),
@@ -91,15 +89,16 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 32),
                     TextFormField(
+                      decoration: InputDecoration(hintText: 'Email'),
                       controller: _emailController,
                       focusNode: _emailFocusNode,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      decoration: InputDecoration(hintText: 'password'),
                       controller: _pwdController,
                       focusNode: _pwdFocusNode,
                       obscureText: true,
@@ -108,6 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     StatefulBuilder(
                       builder: (ctx, setState) {
                         return CheckboxListTile(
+                          contentPadding: EdgeInsets.zero,
                           value: showPassword,
                           onChanged: (value) {
                             setState(() {
@@ -115,8 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             });
                             animationController.setPeeking(showPassword);
                           },
-                          fillColor: WidgetStatePropertyAll(Colors.red),
-                          title: Text('Show password'),
+                          title: Text('Peeking the password'),
                         );
                       },
                     ),
@@ -128,12 +127,26 @@ class _SignupScreenState extends State<SignupScreen> {
             // const SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
+                context.go('/signUp');
               },
-              child: Text('Continue'),
+              child: Text('SignUp'),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Login'),
             ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailFocusNode.removeListener(focusNodeListener);
+    _pwdFocusNode.removeListener(focusNodeListener);
+    _emailController.removeListener(emailLengthListener);
+    super.dispose();
   }
 }

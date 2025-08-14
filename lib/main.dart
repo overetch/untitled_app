@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'core/theme/theme.dart';
-import 'feature/auth/presentation/screens/signup_screen.dart';
-import 'init_dependencies.dart';
+import 'package:untitled/core/routing/routing.dart';
+import 'package:untitled/core/theme/theme.dart';
+import 'package:untitled/init_dependencies.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Unknown',
       themeMode: ThemeMode.dark,
       theme: AppTheme.light().themeData,
       darkTheme: AppTheme.dark().themeData,
-      home: SignupScreen(),
+      routerConfig: router,
     );
   }
 }

@@ -6,4 +6,8 @@ class UserModel extends User {
   factory UserModel.fromJson(Map<String, dynamic> map) {
     return UserModel(id: map['id'], email: map['email'], name: map['name']);
   }
+
+  User toUser() {
+    return User(id: id, email: email, name: name);
+  }
 }

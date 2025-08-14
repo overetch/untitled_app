@@ -45,6 +45,8 @@ dependencies:
   supabase_flutter: ^2.9.1
   # animations
   rive: ^0.13.20
+  # routing
+  go_router: ^16.1.0
 
 
 dev_dependencies:
