@@ -8,9 +8,20 @@ sealed class AuthEvent extends Equatable {
 }
 
 final class AuthSignUp extends AuthEvent {
-  const AuthSignUp({required this.password, required this.email, required this.name});
+  const AuthSignUp({
+    required this.password,
+    required this.email,
+    required this.name,
+  });
 
   final String password;
   final String email;
   final String name;
+}
+
+final class AuthLogin extends AuthEvent {
+  const AuthLogin({required this.password, required this.email});
+
+  final String password;
+  final String email;
 }

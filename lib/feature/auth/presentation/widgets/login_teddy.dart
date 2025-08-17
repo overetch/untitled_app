@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
-import 'login_animation_controller.dart';
+import 'package:untitled/feature/auth/presentation/widgets/login_animation_controller.dart';
 
 class LoginTeddy extends StatefulWidget {
   const LoginTeddy({required this.onInit, super.key});
@@ -22,9 +22,6 @@ class _LoginTeddyState extends State<LoginTeddy> {
       artboard: 'Teddy',
       onInit: (art) {
         final controller = StateMachineController(art.stateMachines.first);
-        controller.stateMachine.inputs.forEach((inputs) {
-          print('input: ${inputs.name}');
-        });
         art.addController(controller);
         animationController = LoginAnimationController(controller);
         widget.onInit(animationController);

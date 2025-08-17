@@ -1,9 +1,10 @@
-import 'package:rive/rive.dart' show StateMachineController, SMIInput;
+import 'package:rive/rive.dart' show SMIInput, StateMachineController;
 
 class LoginAnimationController {
-  final StateMachineController stateMachineController;
 
   LoginAnimationController(this.stateMachineController);
+
+  final StateMachineController stateMachineController;
 
   void setIsChecking([bool value = true]) {
     changeValue<bool>('isChecking', value);

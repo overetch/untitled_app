@@ -5,6 +5,7 @@ import 'package:untitled/core/di/di_container.dart';
 import 'package:untitled/feature/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:untitled/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:untitled/feature/auth/domain/repository/auth_repository.dart';
+import 'package:untitled/feature/auth/domain/usecase/user_login.dart';
 import 'package:untitled/feature/auth/domain/usecase/user_sign_up.dart';
 import 'package:untitled/feature/auth/presentation/bloc/auth_bloc.dart';
 
@@ -24,8 +25,16 @@ void _initAuth() {
   DIContainer().registerFactory<AuthRepository>(
     create: (r) => AuthRepositoryImpl(r.get()),
   );
-  DIContainer().registerFactory<UserSignUp>(create: (r) => UserSignUp(r.get()));
+  DIContainer().registerFactory<UserSignUp>(
+    create: (r) => UserSignUp(r.get()),
+  );
+  DIContainer().registerFactory<UserLogin>(
+    create: (r) => UserLogin(r.get()),
+  );
   DIContainer().registerLazySingleton(
-    create: (r) => AuthBloc(userSignUp: r.get()),
+    create: (r) => AuthBloc(
+      userSignUp: r.get(),
+      userLogin: r.get(),
+    ),
   );
 }
