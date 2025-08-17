@@ -1,3 +1,4 @@
+import 'package:supabase_flutter/supabase_flutter.dart' show Session;
 import 'package:untitled/core/common/either.dart';
 import 'package:untitled/core/error/failure.dart';
 import 'package:untitled/core/exception/exceptions.dart';
@@ -42,5 +43,13 @@ class AuthRepositoryImpl implements AuthRepository {
     } on ServerException catch (e) {
       return Left(Failure(e.message));
     }
+  }
+
+  @override
+  Session? get currentSession => remoteDataSource.currentSession;
+
+  @override
+  Future<void> logout() {
+    return remoteDataSource.logout();
   }
 }

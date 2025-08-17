@@ -1,8 +1,12 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:untitled/core/exception/exceptions.dart';
 import 'package:untitled/feature/auth/data/model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {
+  Session? get currentSession;
+
+  Future<void> logout();
+
   Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
@@ -58,5 +62,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  @override
+  Session? get currentSession => supabaseClient.auth.currentSession;
+
+  @override
+  Future<void> logout() async {
+    return supabaseClient.auth.signOut();
   }
 }
