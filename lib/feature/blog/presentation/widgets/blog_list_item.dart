@@ -6,7 +6,7 @@ class BlogListItem extends StatelessWidget {
   const BlogListItem({
     required this.description,
     required this.onTap,
-    this.maxLength = 10,
+    this.maxLength = null,
     this.title,
     super.key,
   });

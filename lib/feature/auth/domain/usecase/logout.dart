@@ -3,8 +3,8 @@ import 'package:untitled/core/common/usecase.dart';
 import 'package:untitled/core/error/failure.dart';
 import 'package:untitled/feature/auth/domain/repository/auth_repository.dart';
 
-class Logout implements UseCase<void, NoParams> {
-  Logout(this._authRepository);
+class UserLogout implements UseCase<void, NoParams> {
+  UserLogout(this._authRepository);
 
   final AuthRepository _authRepository;
 

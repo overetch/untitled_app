@@ -18,7 +18,8 @@ import 'package:untitled/feature/blog/domain/usecase/remove_blog.dart';
 import 'package:untitled/feature/blog/domain/usecase/save_blog.dart';
 import 'package:untitled/feature/blog/domain/usecase/update_blog.dart';
 import 'package:untitled/feature/blog/domain/usecase/watch_blogs.dart';
-import 'package:untitled/feature/blog/presentation/bloc/blog_bloc.dart';
+import 'package:untitled/feature/blog/presentation/bloc/utility_blog_bloc.dart';
+import 'package:untitled/feature/blog/presentation/bloc/get_blog_bloc.dart';
 
 Future<void> initDependencies() async {
   _initAuth();
@@ -81,11 +82,9 @@ void _initBlog() {
   DIContainer().registerFactory<WatchBlogs>(
     create: (r) => WatchBlogs(r.get()),
   );
-  DIContainer().registerFactory<BlogBloc>(
-    create: (r) => BlogBloc(
+  DIContainer().registerFactory<GetBlogBloc>(
+    create: (r) => GetBlogBloc(
       getBlogs: r.get(),
-      saveBlog: r.get(),
-      removeBlog: r.get(),
       watchBlogs: r.get(),
     ),
   );

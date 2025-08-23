@@ -1,5 +1,6 @@
 import 'package:untitled/core/database/app_database.dart';
 import 'package:untitled/feature/blog/data/model/blog_model.dart';
+import 'package:untitled/feature/blog/domain/usecase/save_blog.dart';
 
 abstract interface class BlogLocalDataSource {
   Future<List<BlogModel>> getBlogs();
@@ -8,7 +9,7 @@ abstract interface class BlogLocalDataSource {
 
   Future<bool> updateBlog(BlogModel blog);
 
-  Future<int> removeBlog(BlogModel blog);
+  Future<int> removeBlog(int blog);
 
   Stream<List<BlogModel>> watchBlogs();
 }
@@ -29,8 +30,10 @@ class BlogLocalDataSourceImpl implements BlogLocalDataSource {
   }
 
   @override
-  Future<int> removeBlog(BlogModel blog) {
-    return database.delete(database.blogTable).delete(blog);
+  Future<int> removeBlog(int id) {
+    return (database.delete(
+      database.blogTable,
+    )..where((item) => database.blogTable.id.equals(id))).go();
   }
 
   @override

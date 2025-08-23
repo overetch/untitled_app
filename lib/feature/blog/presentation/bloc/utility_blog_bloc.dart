@@ -6,9 +6,9 @@ import 'package:untitled/feature/blog/domain/entity/blog.dart';
 import 'package:untitled/feature/blog/domain/usecase/remove_blog.dart';
 import 'package:untitled/feature/blog/domain/usecase/save_blog.dart';
 
-part 'blog_event.dart';
+part 'utility_blog_event.dart';
 
-part 'blog_state.dart';
+part 'utility_blog_state.dart';
 
 class BlogUtilityBloc extends Bloc<BlogUtilityEvent, BlogUtilityState> {
   BlogUtilityBloc({
@@ -30,7 +30,7 @@ class BlogUtilityBloc extends Bloc<BlogUtilityEvent, BlogUtilityState> {
     Emitter<BlogUtilityState> emit,
   ) async {
     emit(BlogUtilityLoading());
-    final data = await _saveBlog(event.blog);
+    // final data = await _saveBlog(event.blog);
 
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:untitled/core/common/validators.dart';
 import 'package:untitled/core/common/widgets/unfocus_widget.dart';
 import 'package:untitled/core/di/di_container.dart';
 import 'package:untitled/core/theme/theme.dart';
@@ -98,7 +99,9 @@ class _SignInScreenState extends State<_SignInScreen> {
           print('error: ${state.message}');
         }
         print('state: $state');
-        if (state is AuthSuccess) {}
+        if (state is AuthSuccess) {
+
+        }
       },
       builder: (context, state) {
         return Padding(
@@ -121,6 +124,7 @@ class _SignInScreenState extends State<_SignInScreen> {
                           decoration: const InputDecoration(hintText: 'Email'),
                           controller: _emailController,
                           focusNode: _emailFocusNode,
+                          validator: Validators.validateEmail,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
@@ -130,6 +134,7 @@ class _SignInScreenState extends State<_SignInScreen> {
                           controller: _pwdController,
                           focusNode: _pwdFocusNode,
                           obscureText: true,
+                          validator: Validators.validatePassword,
                         ),
                         const SizedBox(height: 16),
                         StatefulBuilder(
