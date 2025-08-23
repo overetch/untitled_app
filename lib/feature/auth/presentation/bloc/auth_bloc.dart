@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:untitled/core/common/usecase.dart';
 import 'package:untitled/feature/auth/domain/entity/user.dart';
-import 'package:untitled/feature/auth/domain/usecase/logout.dart';
+import 'package:untitled/feature/auth/domain/usecase/user_logout.dart';
 import 'package:untitled/feature/auth/domain/usecase/user_login.dart';
 import 'package:untitled/feature/auth/domain/usecase/user_sign_up.dart';
 

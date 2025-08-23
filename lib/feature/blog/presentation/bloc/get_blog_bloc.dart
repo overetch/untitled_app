@@ -42,7 +42,7 @@ class GetBlogBloc extends Bloc<GetBlogEvent, GetBlogState> {
     _WatchBlogs event,
     Emitter<GetBlogState> emit,
   ) async {
-    final data = _watchBlogs(NoParams());
+    final data = await _watchBlogs(NoParams());
     data.fold(
       (error) {
         emit(GetBlogState.error(error.message));

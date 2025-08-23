@@ -18,6 +18,7 @@ class SignInScreen extends StatelessWidget {
       create: (context) => AuthBloc(
         userSignUp: DIContainer().get(),
         userLogin: DIContainer().get(),
+        userLogout: DIContainer().get(),
       ),
       child: const _SignInScreen(),
     );
@@ -99,9 +100,7 @@ class _SignInScreenState extends State<_SignInScreen> {
           print('error: ${state.message}');
         }
         print('state: $state');
-        if (state is AuthSuccess) {
-
-        }
+        if (state is AuthSuccess) {}
       },
       builder: (context, state) {
         return Padding(

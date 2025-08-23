@@ -13,6 +13,7 @@ class SignUpScreen extends StatelessWidget {
       create: (context) => AuthBloc(
         userSignUp: DIContainer().get(),
         userLogin: DIContainer().get(),
+        userLogout: DIContainer().get(),
       ),
       child: const _SignUpScreen(),
     );
