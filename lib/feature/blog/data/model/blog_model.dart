@@ -7,14 +7,16 @@ class BlogModel extends Insertable<BlogModel> {
     required this.title,
     required this.content,
     required this.createdAt,
+    this.id,
   });
 
+  final int? id;
   final String? title;
   final String content;
   final DateTime? createdAt;
 
   Blog toEntity() {
-    return Blog(title: title, content: content, createdAt: createdAt);
+    return Blog(id: id!, title: title, content: content, createdAt: createdAt);
   }
 
   @override

@@ -13,6 +13,12 @@ import 'package:untitled/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:untitled/feature/blog/data/data_sources/blog_local_data_source.dart';
 import 'package:untitled/feature/blog/data/repository/blog_repository_impl.dart';
 import 'package:untitled/feature/blog/domain/repository/blog_repository.dart';
+import 'package:untitled/feature/blog/domain/usecase/get_blogs.dart';
+import 'package:untitled/feature/blog/domain/usecase/remove_blog.dart';
+import 'package:untitled/feature/blog/domain/usecase/save_blog.dart';
+import 'package:untitled/feature/blog/domain/usecase/update_blog.dart';
+import 'package:untitled/feature/blog/domain/usecase/watch_blogs.dart';
+import 'package:untitled/feature/blog/presentation/bloc/blog_bloc.dart';
 
 Future<void> initDependencies() async {
   _initAuth();
@@ -59,5 +65,30 @@ void _initBlog() {
   DIContainer().registerFactory<BlogRepository>(
     create: (r) => BlogRepositoryImpl(r.get()),
   );
+
+  DIContainer().registerFactory<GetBlogs>(
+    create: (r) => GetBlogs(r.get()),
+  );
+  DIContainer().registerFactory<RemoveBlog>(
+    create: (r) => RemoveBlog(r.get()),
+  );
+  DIContainer().registerFactory<SaveBlog>(
+    create: (r) => SaveBlog(r.get()),
+  );
+  DIContainer().registerFactory<UpdateBlog>(
+    create: (r) => UpdateBlog(r.get()),
+  );
+  DIContainer().registerFactory<WatchBlogs>(
+    create: (r) => WatchBlogs(r.get()),
+  );
+  DIContainer().registerFactory<BlogBloc>(
+    create: (r) => BlogBloc(
+      getBlogs: r.get(),
+      saveBlog: r.get(),
+      removeBlog: r.get(),
+      watchBlogs: r.get(),
+    ),
+  );
+
   // BlogLocalDataSource
 }

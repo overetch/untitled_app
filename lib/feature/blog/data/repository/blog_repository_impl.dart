@@ -21,8 +21,6 @@ class BlogRepositoryImpl implements BlogRepository {
 
   @override
   Future<Either<Failure, List<Blog>>> getBlogs() async {
-
-    final blogModels = await _wrapper<List<BlogModel>>(dataSource.getBlogs);
     try {
       return dataSource.getBlogs().then(
         (value) => Right(value.map((e) => e.toEntity()).toList()),

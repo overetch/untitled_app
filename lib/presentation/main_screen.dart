@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untitled/core/di/di_container.dart';
-import 'package:untitled/feature/blog/data/repository/blog_repository_impl.dart';
+import 'package:untitled/core/routing/routing.dart';
 import 'package:untitled/feature/blog/domain/entity/blog.dart';
+import 'package:untitled/feature/blog/presentation/bloc/blog_bloc.dart';
+import 'package:untitled/feature/blog/presentation/widgets/blog_list_item.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const _MainScreen();
+    return BlocProvider(
+      create: (context) => DIContainer().get<BlogBloc>()..add(BlogEvent.load()),
+      child: const _MainScreen(),
+    );
   }
 }
 
@@ -21,39 +28,53 @@ class _MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<_MainScreen> {
   @override
-  void initState() {
-    test();
-    super.initState();
-  }
-
-  void test() async {
-    BlogRepositoryImpl blogRepo = BlogRepositoryImpl(DIContainer().get());
-    final blogs = await blogRepo.getBlogs();
-    blogs.fold((error) {}, (data) {
-      print('blogs: $data');
-    });
-
-    // final int = await blogRepo.saveBlog(
-    //   Blog(title: 'title', content: 'content', createdAt: DateTime.now()),
-    // );
-    // print('saving: $int');
-
-    final blogsAfter = await blogRepo.getBlogs();
-    blogs.fold((error) {
-      print('error: $error');
-    }, (data) {
-      print('blogs: $data');
-    });
-
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Untitled'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.go(blogCreateRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
-      body: Container(),
+      body: BlocBuilder<BlogBloc, BlogState>(
+        builder: (context, state) {
+          return switch (state) {
+            BlogLoading() => const Center(child: CircularProgressIndicator()),
+            BlogError(:var error) => Text(error),
+            BlogLoaded(:var blogs) when blogs.isEmpty => _emptyView(),
+            BlogLoaded(:var blogs) => _blogList(blogs),
+          };
+        },
+      ),
+    );
+  }
+
+  Widget _emptyView() {
+    return const Center(
+      child: Text(
+        'There are no blogs\nclick on "+" to create one!',
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _blogList(List<Blog> blogs) {
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return BlogListItem(
+          title: blogs[index].title,
+          description: blogs[index].content,
+          onTap: () {
+
+          },
+        );
+      },
+      itemCount: blogs.length,
     );
   }
 }
