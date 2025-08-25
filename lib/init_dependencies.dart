@@ -11,6 +11,7 @@ import 'package:untitled/feature/auth/domain/usecase/user_login.dart';
 import 'package:untitled/feature/auth/domain/usecase/user_logout.dart';
 import 'package:untitled/feature/auth/domain/usecase/user_sign_up.dart';
 import 'package:untitled/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:untitled/feature/auth/presentation/bloc/logout_bloc.dart';
 import 'package:untitled/feature/blog/data/data_sources/blog_local_data_source.dart';
 import 'package:untitled/feature/blog/data/repository/blog_repository_impl.dart';
 import 'package:untitled/feature/blog/domain/repository/blog_repository.dart';
@@ -56,9 +57,16 @@ void _initAuth() {
   DIContainer().registerFactory<UserLogout>(
     create: (r) => UserLogout(r.get()),
   );
+  DIContainer().registerFactory<LogoutBloc>(
+    create: (r) => LogoutBloc(r.get()),
+  );
 
   DIContainer().registerLazySingleton(
-    create: (r) => AuthBloc(userSignUp: r.get(), userLogin: r.get(), userLogout: r.get()),
+    create: (r) => AuthBloc(
+      userSignUp: r.get(),
+      userLogin: r.get(),
+      userLogout: r.get(),
+    ),
   );
 }
 

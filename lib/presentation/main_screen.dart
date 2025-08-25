@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:untitled/core/di/di_container.dart';
 import 'package:untitled/core/routing/routing.dart';
+import 'package:untitled/feature/auth/presentation/widgets/logout_icon.dart';
 import 'package:untitled/feature/blog/domain/entity/blog.dart';
 import 'package:untitled/feature/blog/presentation/bloc/get_blog_bloc.dart';
 import 'package:untitled/feature/blog/presentation/widgets/blog_list_item.dart';
@@ -41,12 +42,9 @@ class _MainScreenState extends State<_MainScreen> {
             },
             icon: const Icon(Icons.add),
           ),
-          IconButton(
-            onPressed: () {
-              context.go(signInRoute);
-            },
-            icon: const Icon(Icons.logout),
-          ),
+          LogoutIcon(onSuccess: () {
+            context.go('/');
+          },),
         ],
       ),
       body: BlocBuilder<GetBlogBloc, GetBlogState>(
