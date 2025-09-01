@@ -20,7 +20,7 @@ final router = GoRouter(
         if (response.isRight()) {
           return '/main';
         }
-        return '/';
+        return state.fullPath;
       },
       routes: [
         GoRoute(

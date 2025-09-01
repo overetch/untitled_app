@@ -63,18 +63,15 @@ class _SignInScreenState extends State<_SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: localKey,
-      child: Scaffold(
-        backgroundColor: context.color(Palette.authBg),
-        body: UnfocusWidget(
-          child: SafeArea(
-            child: Stack(
-              children: [
-                Positioned(left: 0, right: 0, child: teddy()),
-                body(),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: context.color(Palette.authBg),
+      body: UnfocusWidget(
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Positioned(left: 0, right: 0, child: teddy()),
+              body(),
+            ],
           ),
         ),
       ),
@@ -97,85 +94,102 @@ class _SignInScreenState extends State<_SignInScreen> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure) {
-          print('error: ${state.message}');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
         }
-        print('state: $state');
-        if (state is AuthSuccess) {}
+        if (state is AuthSuccess) {
+          context.go('/main');
+        }
       },
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text(
-                  'Welcome to Untitled!',
-                  style: context.text(Texts.bodyLargeMedium),
-                ),
-                const SizedBox(height: 180),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 32),
-                        TextFormField(
-                          decoration: const InputDecoration(hintText: 'Email'),
-                          controller: _emailController,
-                          focusNode: _emailFocusNode,
-                          validator: Validators.validateEmail,
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'password',
+          child: Form(
+            key: localKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    'Welcome to Untitled!',
+                    style: context.text(Texts.bodyLargeMedium),
+                  ),
+                  const SizedBox(height: 180),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 32),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Email',
+                            ),
+                            controller: _emailController,
+                            focusNode: _emailFocusNode,
+                            validator: Validators.validateEmail,
                           ),
-                          controller: _pwdController,
-                          focusNode: _pwdFocusNode,
-                          obscureText: true,
-                          validator: Validators.validatePassword,
-                        ),
-                        const SizedBox(height: 16),
-                        StatefulBuilder(
-                          builder: (ctx, setState) {
-                            return CheckboxListTile(
-                              contentPadding: EdgeInsets.zero,
-                              value: showPassword,
-                              onChanged: (value) {
-                                setState(() {
-                                  showPassword = !showPassword;
-                                });
-                                animationController.setPeeking(showPassword);
-                              },
-                              title: const Text('Peeking the password'),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 32),
-                      ],
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'password',
+                            ),
+                            controller: _pwdController,
+                            focusNode: _pwdFocusNode,
+                            obscureText: true,
+                            validator: Validators.validatePassword,
+                          ),
+                          const SizedBox(height: 16),
+                          StatefulBuilder(
+                            builder: (ctx, setState) {
+                              return CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                value: showPassword,
+                                onChanged: (value) {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                  animationController.setPeeking(showPassword);
+                                },
+                                title: const Text('Peeking the password'),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 32),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                // const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/signUp');
-                  },
-                  child: const Text('SignUp'),
-                ),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                      AuthLogin(
-                        password: _pwdController.text.trim(),
-                        email: _emailController.text.trim(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FilledButton(
+                        onPressed: () {
+                          context.go('/signUp');
+                        },
+                        child: const Text('SignUp'),
                       ),
-                    );
-                  },
-                  child: const Text('Login'),
-                ),
-              ],
+                      const SizedBox(height: 32),
+                      FilledButton(
+                        onPressed: () {
+                          ScaffoldState
+                          if (localKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                              AuthLogin(
+                                password: _pwdController.text.trim(),
+                                email: _emailController.text.trim(),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Login'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
