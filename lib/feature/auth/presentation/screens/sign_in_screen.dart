@@ -174,7 +174,6 @@ class _SignInScreenState extends State<_SignInScreen> {
                       const SizedBox(height: 32),
                       FilledButton(
                         onPressed: () {
-                          ScaffoldState
                           if (localKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(
                               AuthLogin(
