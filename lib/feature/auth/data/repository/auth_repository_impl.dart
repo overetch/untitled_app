@@ -35,13 +35,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final response = await remoteDataSource.signUpWithEmailPassword(
-        name: name,
         email: email,
         password: password,
       );
-      return Right(response);
+      return Right(response.toUser());
     } on ServerException catch (e) {
       return Left(Failure(e.message));
+    } catch(e) {
+      return Left(Failure(e.toString()));
     }
   }
 

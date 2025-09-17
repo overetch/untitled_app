@@ -8,7 +8,6 @@ abstract interface class AuthRemoteDataSource {
   Future<void> logout();
 
   Future<UserModel> signUpWithEmailPassword({
-    required String name,
     required String email,
     required String password,
   });
@@ -45,7 +44,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<UserModel> signUpWithEmailPassword({
-    required String name,
     required String email,
     required String password,
   }) async {
@@ -53,7 +51,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final response = await supabaseClient.auth.signUp(
         password: password,
         email: email,
-        data: {'name': name},
       );
       if (response.user == null) {
         throw ServerException('User exception');

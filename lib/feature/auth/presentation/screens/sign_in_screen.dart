@@ -8,6 +8,7 @@ import 'package:untitled/core/theme/theme.dart';
 import 'package:untitled/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:untitled/feature/auth/presentation/widgets/login_animation_controller.dart';
 import 'package:untitled/feature/auth/presentation/widgets/login_teddy.dart';
+import 'package:untitled/presentation/widgets/custom_text_form_field.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -40,7 +41,6 @@ class _SignInScreenState extends State<_SignInScreen> {
   final TextEditingController _pwdController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _pwdFocusNode = FocusNode();
-  bool showPassword = false;
 
   @override
   void initState() {
@@ -123,38 +123,23 @@ class _SignInScreenState extends State<_SignInScreen> {
                       child: Column(
                         children: [
                           const SizedBox(height: 32),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'Email',
-                            ),
+                          CustomTextFormField(
+                            enabled: state is! AuthLoading,
+                            hintText: 'Email',
                             controller: _emailController,
                             focusNode: _emailFocusNode,
                             validator: Validators.validateEmail,
                           ),
                           const SizedBox(height: 16),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              hintText: 'password',
-                            ),
+                          CustomTextFormField(
+                            enabled: state is! AuthLoading,
+                            hintText: 'password',
                             controller: _pwdController,
                             focusNode: _pwdFocusNode,
                             obscureText: true,
                             validator: Validators.validatePassword,
-                          ),
-                          const SizedBox(height: 16),
-                          StatefulBuilder(
-                            builder: (ctx, setState) {
-                              return CheckboxListTile(
-                                contentPadding: EdgeInsets.zero,
-                                value: showPassword,
-                                onChanged: (value) {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                  animationController.setPeeking(showPassword);
-                                },
-                                title: const Text('Peeking the password'),
-                              );
+                            obscureListener: (isObscure) {
+                              animationController.setPeeking(!isObscure);
                             },
                           ),
                           const SizedBox(height: 32),

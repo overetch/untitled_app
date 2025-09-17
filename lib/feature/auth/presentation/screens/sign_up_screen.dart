@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/core/common/validators.dart';
 import 'package:untitled/core/di/di_container.dart';
 import 'package:untitled/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:untitled/presentation/widgets/custom_text_form_field.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -52,57 +53,60 @@ class _SignUpScreenState extends State<_SignUpScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              print('error: ${state.message}');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                ),
+              );
             }
-            print('state: $state');
+            if(state is AuthSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Registered successfully!'),
+                ),
+              );
+              Navigator.of(context).pop();
+            }
           },
           builder: (context, state) {
             return Form(
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
+                  CustomTextFormField(
+                    enabled: state is! AuthLoading,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
-                      prefixIcon: Icon(Icons.email),
-                    ),
+                    labelText: 'Email',
+                    hintText: 'Enter your email',
                     validator: Validators.validateEmail,
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
+                  CustomTextFormField(
+                    enabled: state is! AuthLoading,
                     controller: _nameController,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      hintText: 'Enter your name',
-                      prefixIcon: Icon(Icons.email),
-                    ),
+                    labelText: 'Name',
+                    hintText: 'Enter your name',
                     validator: (value) =>
                         Validators.validateLength(value, 3, 18),
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
+                  CustomTextFormField(
+                    enabled: state is! AuthLoading,
                     controller: _pwdController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      prefixIcon: Icon(Icons.lock),
-                    ),
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
                     validator: Validators.validatePassword,
                   ),
                   const SizedBox(height: 32),
-                  TextFormField(
+                  CustomTextFormField(
+                    enabled: state is! AuthLoading,
                     controller: _pwdConfirmController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirm password',
-                      hintText: 'Confirm your password',
-                      prefixIcon: Icon(Icons.lock),
-                    ),
+                    labelText: 'Confirm password',
+                    hintText: 'Confirm your password',
                     validator: (value) {
                       return Validators.validateConfirmPassword(
                         value,
