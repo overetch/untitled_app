@@ -8,6 +8,7 @@ import 'package:untitled/feature/auth/presentation/widgets/logout_icon.dart';
 import 'package:untitled/feature/blog/domain/entity/blog.dart';
 import 'package:untitled/feature/blog/presentation/bloc/get_blog_bloc.dart';
 import 'package:untitled/feature/blog/presentation/widgets/blog_list_item.dart';
+import 'package:untitled/presentation/widgets/action_fab.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -33,6 +34,7 @@ class _MainScreenState extends State<_MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ActionFab(),
       appBar: AppBar(
         title: Text('Untitled'),
         actions: [
