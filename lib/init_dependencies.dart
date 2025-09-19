@@ -101,5 +101,12 @@ void _initBlog() {
     ),
   );
 
+  DIContainer().registerFactory<BlogUtilityBloc>(
+    create: (r) => BlogUtilityBloc(
+      saveBlog: r.get(),
+      removeBlog: r.get(),
+    ),
+  );
+
   // BlogLocalDataSource
 }

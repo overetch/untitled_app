@@ -17,7 +17,6 @@ class CreateBlogScreen extends StatelessWidget {
   }
 }
 
-
 class _CreateBlogScreen extends StatefulWidget {
   const _CreateBlogScreen({super.key});
 
@@ -38,9 +37,8 @@ class _CreateBlogScreenState extends State<_CreateBlogScreen> {
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: BlocConsumer<GetBlogBloc, GetBlogState>(
-            listener: (context, state) {
-            },
+          child: BlocConsumer<BlogUtilityBloc, BlogUtilityState>(
+            listener: (context, state) {},
             builder: (context, state) {
               return Column(
                 children: [
@@ -69,12 +67,12 @@ class _CreateBlogScreenState extends State<_CreateBlogScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // context.read<BlogUtilityBloc>().add(BlogUtilityEvent.createBlog(Blog(
-                        //   id: 0,
-                        //   title: _titleController.text,
-                        //   content: _contentController.text,
-                        //   createdAt: DateTime.now(),
-                        // )));
+                        context.read<BlogUtilityBloc>().add(
+                          BlogUtilityEvent.createBlog(
+                            title: _titleController.text.trim(),
+                            description: _contentController.text.trim(),
+                          ),
+                        );
                       }
                     },
                     child: const Text('Create'),

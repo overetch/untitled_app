@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:untitled/core/di/di_container.dart';
 import 'package:untitled/core/routing/routing.dart';
 import 'package:untitled/feature/auth/presentation/widgets/logout_icon.dart';
 import 'package:untitled/feature/blog/domain/entity/blog.dart';
 import 'package:untitled/feature/blog/presentation/bloc/get_blog_bloc.dart';
 import 'package:untitled/feature/blog/presentation/widgets/blog_list_item.dart';
-import 'package:untitled/presentation/widgets/action_fab.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -34,19 +32,20 @@ class _MainScreenState extends State<_MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ActionFab(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go(blogCreateRoute);
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text('Untitled'),
         actions: [
-          IconButton(
-            onPressed: () {
-              context.go(blogCreateRoute);
+          LogoutIcon(
+            onSuccess: () {
+              context.go('/');
             },
-            icon: const Icon(Icons.add),
           ),
-          LogoutIcon(onSuccess: () {
-            context.go('/');
-          },),
         ],
       ),
       body: BlocBuilder<GetBlogBloc, GetBlogState>(
