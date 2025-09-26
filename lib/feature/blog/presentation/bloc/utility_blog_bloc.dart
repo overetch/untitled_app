@@ -30,12 +30,28 @@ class BlogUtilityBloc extends Bloc<BlogUtilityEvent, BlogUtilityState> {
     Emitter<BlogUtilityState> emit,
   ) async {
     emit(BlogUtilityLoading());
-    // final data = await _saveBlog(event.blog);
-
+    final data = await _saveBlog(
+      BlogParams(
+        title: event.title,
+        description: event.description,
+      ),
+    );
+    data.fold(
+      (l) => emit(BlogUtilityError(l.message, BlogUtilityEventEnum.createBlog)),
+      (r) => emit(const BlogUtilitySuccess(BlogUtilityEventEnum.createBlog)),
+    );
   }
 
   Future<void> _onRemoveBlog(
     _RemoveBlog event,
     Emitter<BlogUtilityState> emit,
-  ) async {}
+  ) async {
+    emit(BlogUtilityLoading());
+
+    final data = await _removeBlog(event.id);
+    data.fold(
+      (l) => emit(BlogUtilityError(l.message, BlogUtilityEventEnum.removeBlog)),
+      (r) => emit(const BlogUtilitySuccess(BlogUtilityEventEnum.removeBlog)),
+    );
+  }
 }

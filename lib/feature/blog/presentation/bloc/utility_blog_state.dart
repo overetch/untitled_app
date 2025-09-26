@@ -20,12 +20,13 @@ final class BlogUtilitySuccess extends BlogUtilityState {
 }
 
 final class BlogUtilityError extends BlogUtilityState {
-  const BlogUtilityError(this.error);
+  const BlogUtilityError(this.error, this.event);
 
   final String error;
+  final BlogUtilityEventEnum event;
 
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [error, event];
 }
 
 final class BlogUtilityInitial extends BlogUtilityState {

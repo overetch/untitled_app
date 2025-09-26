@@ -38,11 +38,20 @@ class _CreateBlogScreenState extends State<_CreateBlogScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: BlocConsumer<BlogUtilityBloc, BlogUtilityState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is BlogUtilitySuccess) {
+                //TODO(snackbar): move to a separate widget
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Blog successfully created')),
+                );
+                Navigator.pop(context);
+              }
+            },
             builder: (context, state) {
               return Column(
                 children: [
                   TextFormField(
+                    controller: _titleController,
                     decoration: const InputDecoration(
                       hintText: 'Title',
                     ),
@@ -54,6 +63,7 @@ class _CreateBlogScreenState extends State<_CreateBlogScreen> {
                     },
                   ),
                   TextFormField(
+                    controller: _contentController,
                     decoration: const InputDecoration(
                       hintText: 'Content',
                     ),

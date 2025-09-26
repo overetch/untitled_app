@@ -15,7 +15,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          DIContainer().get<GetBlogBloc>()..add(GetBlogEvent.get()),
+          DIContainer().get<GetBlogBloc>()..add(GetBlogEvent.watch()),
       child: const _MainScreen(),
     );
   }
